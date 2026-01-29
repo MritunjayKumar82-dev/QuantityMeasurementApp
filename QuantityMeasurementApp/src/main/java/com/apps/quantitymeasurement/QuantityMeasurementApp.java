@@ -3,7 +3,7 @@ package com.apps.quantitymeasurement;
 import java.util.Objects;
 import java.util.Scanner;
 
-public class FeetCode {
+public class QuantityMeasurementApp {
 
     public static final class Feet{
         private final Double value;
