@@ -14,7 +14,9 @@ public class FeetCode {
             }
             this.value = value;
         }
-        public Double getValue(){return value;}
+        public Double getValue(){
+            return value;
+        }
 
         @Override
         public boolean equals(Object o) {
