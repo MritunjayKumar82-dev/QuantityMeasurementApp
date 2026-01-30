@@ -1,12 +1,10 @@
 package com.apps.quantitymeasurement;
 
-public class FeetCode {
-
+public class QuantityMeasurementApp {
     public static void main(String[] args) {
-
         System.out.println("Main Branch");
-
-    }}
+    }
+}
 
 
 
