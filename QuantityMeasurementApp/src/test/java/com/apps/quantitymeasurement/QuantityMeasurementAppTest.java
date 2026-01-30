@@ -23,6 +23,10 @@ public class QuantityMeasurementAppTest {
         QuantityMeasurementApp.Feet feet1=new QuantityMeasurementApp.Feet(1.0);
         assertNotEquals(feet1,null);
     }
+    void testFeetEquality_DifferentClass(){
+
+    }
+
     @Test
     void testFeetEquality_SameReference(){
         QuantityMeasurementApp.Feet f1=new QuantityMeasurementApp.Feet(1.0);
@@ -46,6 +50,18 @@ public class QuantityMeasurementAppTest {
     void testInchesEquality_NullComparison(){
         QuantityMeasurementApp.Inches i1=new QuantityMeasurementApp.Inches(1.0);
         assertNotEquals(i1,null);
+    }
+
+    @Test
+    void testInchesEquality_DifferentClass(){
+        QuantityMeasurementApp.Inches inches= new QuantityMeasurementApp.Inches(1.0);
+        QuantityMeasurementApp.Feet feet=new QuantityMeasurementApp.Feet(1.0);
+        assertNotEquals(inches,feet);
+    }
+    @Test
+    void testInchesEquality_SameReference(){
+        QuantityMeasurementApp.Inches inches=new QuantityMeasurementApp.Inches(1.0);
+        assertEquals(inches,inches);
     }
     @Test
     void testFeetToInchesEquality(){
