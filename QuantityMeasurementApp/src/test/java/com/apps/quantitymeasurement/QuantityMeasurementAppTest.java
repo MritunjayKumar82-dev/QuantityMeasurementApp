@@ -2,8 +2,7 @@ package com.apps.quantitymeasurement;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class QuantityMeasurementAppTest {
 
@@ -60,7 +59,20 @@ public class QuantityMeasurementAppTest {
         QuantityMeasurementApp.Feet f1=new QuantityMeasurementApp.Feet(1.0);
         assertNotEquals(f1.toInches(),i1.toInches());
     }
+    @Test
+    void testStaticFeetEqualityMethod(){
+        assertTrue(QuantityMeasurementApp.demonstrateFeetEquality());
+    }
 
+    @Test
+    void testStaticInchesEqualityMethod(){
+        assertTrue(QuantityMeasurementApp.demonstrateInchesEquality());
+    }
+    @Test
+    void testStaticFeetInchesEqualityMethod(){
+        assertTrue(QuantityMeasurementApp.demonstrateFeetInchesEquality());
+    }
 
 }
+
 
