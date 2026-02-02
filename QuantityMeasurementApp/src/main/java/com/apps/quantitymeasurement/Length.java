@@ -7,24 +7,46 @@ public class Length {
     private final LengthUnit unit;
 
     public Length(double value, LengthUnit unit) {
+        if (!Double.isFinite(value))
+            throw new IllegalArgumentException("Invalid numeric Value");
+        if(unit==null)
+            throw new IllegalArgumentException("LengthUnit cannot be null");
         this.value = value;
         this.unit = unit;
     }
     private double convertToBaseUnit(){
-        return Math.round(value * unit.getConversionFactor() * 100.0)/100.0;
+        return round(value * unit.getConversionFactor() * 100.0)/100.0;
+    }
+    public Length convertTo(LengthUnit targetUnit){
+        if(targetUnit == null) throw new IllegalArgumentException("Target unit cannot be null");
+
+        double baseValue=convertToBaseUnit();
+        double convertedValue=baseValue/ targetUnit.getConversionFactor();
+        return new Length(round(convertedValue),targetUnit);
     }
     public boolean compare(Length other){
         if(other == null) return false;
         return Double.compare(this.convertToBaseUnit(),other.convertToBaseUnit())==0;
     }
+
     @Override
-    public boolean equals(Object obj){
+    public boolean equals(Object obj) {
         if (this==obj) return true;
-        if (!(obj instanceof Length other)) return false;
+        if(!(obj instanceof Length other)) return false;
         return compare(other);
     }
+
     @Override
-    public int hashCode(){
+    public int hashCode() {
         return Objects.hash(convertToBaseUnit());
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%.2f %s",value,unit);
+    }
+
+    private double round(double val){
+        return Math.round(val*100.0)/100.0;
     }
 }
