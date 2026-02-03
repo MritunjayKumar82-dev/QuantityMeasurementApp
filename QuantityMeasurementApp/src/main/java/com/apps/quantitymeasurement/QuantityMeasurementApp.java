@@ -11,6 +11,16 @@ public class QuantityMeasurementApp {
     public static boolean demonstrateLengthEquality(Length l1,Length l2){
         return l1.equals(l2);
     }
+    public static Length demonstrateLengthComparison(double value,LengthUnit fromUnit,LengthUnit toUnit) {
+        return new Length(value, fromUnit).convertTo(toUnit);
+    }
+    public static Length demonstrateLengthConversion(Length l1,LengthUnit l2){
+        return l1.convertTo(l2);
+    }
+    public static boolean demonstrateLengthComparision(Length l1,Length l2){
+        return l1.equals(l2);
+    }
+
     public static void main(String[] args) {
         System.out.println(demonstrateLengthEquality( new Length(1.0,LengthUnit.FEET),new Length(12.0,LengthUnit.INCHES)));
         System.out.println(demonstrateLengthEquality( new Length(1.0,LengthUnit.YARDS),new Length(36.0,LengthUnit.INCHES)));

@@ -1,11 +1,8 @@
 package com.apps.quantitymeasurement;
-
 import java.util.Objects;
-
 public class Length {
     private final double value;
     private final LengthUnit unit;
-
     public Length(double value, LengthUnit unit) {
         if (!Double.isFinite(value))
             throw new IllegalArgumentException("Invalid numeric Value");
@@ -19,7 +16,6 @@ public class Length {
     }
     public Length convertTo(LengthUnit targetUnit){
         if(targetUnit == null) throw new IllegalArgumentException("Target unit cannot be null");
-
         double baseValue=convertToBaseUnit();
         double convertedValue=baseValue/ targetUnit.getConversionFactor();
         return new Length(round(convertedValue),targetUnit);
@@ -28,19 +24,16 @@ public class Length {
         if(other == null) return false;
         return Double.compare(this.convertToBaseUnit(),other.convertToBaseUnit())==0;
     }
-
     @Override
     public boolean equals(Object obj) {
         if (this==obj) return true;
         if(!(obj instanceof Length other)) return false;
         return compare(other);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(convertToBaseUnit());
     }
-
     @Override
     public String toString() {
         return String.format("%.2f %s",value,unit);
