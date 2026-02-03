@@ -11,6 +11,7 @@ public class QuantityMeasurementApp {
     public static boolean demonstrateLengthEquality(Length l1,Length l2){
         return l1.equals(l2);
     }
+
     public static Length demonstrateLengthComparison(double value,LengthUnit fromUnit,LengthUnit toUnit) {
         return new Length(value, fromUnit).convertTo(toUnit);
     }
