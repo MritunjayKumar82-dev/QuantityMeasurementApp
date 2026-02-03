@@ -11,6 +11,16 @@ public class Length {
         this.value = value;
         this.unit = unit;
     }
+    /*================================
+       UC6 Add Operations
+    ================================*/
+    public Length add(Length other){
+        if(other == null){throw  new IllegalArgumentException("Other Length Cannot be null");}
+        double sumInBaseUnit=this.convertToBaseUnit()+ other.convertToBaseUnit();
+        double convertedValue=sumInBaseUnit/this.unit.getConversionFactor();
+        return new Length(round(convertedValue),this.unit);
+    }
+
     private double convertToBaseUnit(){
         return round(value * unit.getConversionFactor() * 100.0)/100.0;
     }

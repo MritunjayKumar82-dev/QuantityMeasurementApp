@@ -35,6 +35,20 @@ public class QuantityMeasurementApp {
         System.out.println(convert(36.0,LengthUnit.INCHES,LengthUnit.YARDS));
         System.out.println(convert(1.0,LengthUnit.CENTIMETERS,LengthUnit.INCHES));
         System.out.println(convert(0.0,LengthUnit.FEET,LengthUnit.INCHES));
+
+        /*
+         ***************Below Output is for UC6******************
+         */
+        System.out.println(new Length(1.0,LengthUnit.FEET).add(new Length(2.0,LengthUnit.FEET)));
+        System.out.println(new Length(1.0,LengthUnit.FEET).add(new Length(12.0,LengthUnit.INCHES)));
+        System.out.println(new Length(1.0,LengthUnit.YARDS).add(new Length(3.0,LengthUnit.FEET)));
+        System.out.println(new Length(2.54,LengthUnit.CENTIMETERS).add(new Length(1.0,LengthUnit.INCHES)));
+        System.out.println(new Length(12.0,LengthUnit.INCHES).add(new Length(1.0,LengthUnit.FEET)));
+        System.out.println(new Length(1.0,LengthUnit.YARDS).add(new Length(3.0,LengthUnit.FEET)));
+        System.out.println(new Length(36.0,LengthUnit.INCHES).add(new Length(1.0,LengthUnit.YARDS)));
+        System.out.println(new Length(2.54,LengthUnit.CENTIMETERS).add(new Length(1.0,LengthUnit.INCHES)));
+        System.out.println(new Length(5.0,LengthUnit.FEET).add(new Length(0.0,LengthUnit.INCHES)));
+        System.out.println(new Length(5.0,LengthUnit.FEET).add(new Length(-2.0,LengthUnit.FEET)));
     }
 
 }
