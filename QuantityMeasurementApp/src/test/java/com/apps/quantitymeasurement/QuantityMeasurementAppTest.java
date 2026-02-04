@@ -183,6 +183,47 @@ public class QuantityMeasurementAppTest {
 
     }
 
+    /*test case for UC7*/
+    @Test
+    public void addFeetAndInchesReturnFeet(){
+        Length length1=new Length(3.0,LengthUnit.FEET);
+        Length length2=new Length(12.0,LengthUnit.INCHES);
+        Length result=QuantityMeasurementApp.demonstrateLengthAddition(length1,length2,LengthUnit.FEET);
+        assertTrue((result.equals(new Length(4.0,LengthUnit.FEET))));
+    }
+    @Test
+    public void addFeetAndInchesReturnInches(){
+        Length length1=new Length(1.0,LengthUnit.FEET);
+        Length length2=new Length(12.0,LengthUnit.INCHES);
+        Length result=QuantityMeasurementApp.demonstrateLengthAddition(length1,length2,LengthUnit.INCHES);
+        assertTrue((result.equals(new Length(24.0,LengthUnit.INCHES))));
+
+    }
+    @Test
+    public void addFeetAndCentimetersReturnFeet(){
+        Length length1=new Length(1.0,LengthUnit.FEET);
+        Length length2=new Length(30.48,LengthUnit.CENTIMETERS);
+        Length result=QuantityMeasurementApp.demonstrateLengthAddition(length1,length2,LengthUnit.FEET);
+        assertTrue((result.equals(new Length(2.0,LengthUnit.FEET))));
+
+    }
+    @Test
+    public void addInchesAndFeetReturnInches(){
+        Length length1=new Length(12.0,LengthUnit.INCHES);
+        Length length2=new Length(1.0,LengthUnit.FEET);
+        Length result=QuantityMeasurementApp.demonstrateLengthAddition(length1,length2,LengthUnit.INCHES);
+        assertTrue((result.equals(new Length(24.0,LengthUnit.INCHES))));
+
+    }
+    @Test
+    public void addFeetAndFeetReturnFeet(){
+        Length length1=new Length(2.0,LengthUnit.FEET);
+        Length length2=new Length(3.0,LengthUnit.FEET);
+        Length result=QuantityMeasurementApp.demonstrateLengthAddition(length1,length2,LengthUnit.FEET);
+        assertTrue((result.equals(new Length(5.0,LengthUnit.FEET))));
+
+    }
+
 
 }
 
