@@ -16,7 +16,7 @@ public class Length {
         return value;
     }
 
-    /*================================
+       /*================================
            UC6 Add Operations
         ================================*/
     public Length add(Length other){
@@ -24,6 +24,17 @@ public class Length {
         double sumInBaseUnit=this.convertToBaseUnit()+ other.convertToBaseUnit();
         double convertedValue=sumInBaseUnit/this.unit.getConversionFactor();
         return new Length(round(convertedValue),this.unit);
+    }
+       /*================================
+           UC7 Add Operations
+        ================================*/
+    public Length addLength(Length length,LengthUnit targerUnit){
+        if (length==null) throw new IllegalArgumentException("Target unit cannot be null");
+        if (targerUnit==null) throw new IllegalArgumentException("Target unit cannot be null");
+        double sumInBaseUnit=this.convertToBaseUnit()+ length.convertToBaseUnit();
+        double convertedValue=sumInBaseUnit/targerUnit.getConversionFactor();
+        return new Length(round(convertedValue),targerUnit);
+
     }
 
     private double convertToBaseUnit(){
