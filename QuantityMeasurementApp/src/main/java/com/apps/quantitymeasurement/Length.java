@@ -11,9 +11,14 @@ public class Length {
         this.value = value;
         this.unit = unit;
     }
+
+    public double getValue() {
+        return value;
+    }
+
     /*================================
-       UC6 Add Operations
-    ================================*/
+           UC6 Add Operations
+        ================================*/
     public Length add(Length other){
         if(other == null){throw  new IllegalArgumentException("Other Length Cannot be null");}
         double sumInBaseUnit=this.convertToBaseUnit()+ other.convertToBaseUnit();
@@ -26,7 +31,8 @@ public class Length {
     }
     public Length convertTo(LengthUnit targetUnit){
         if(targetUnit == null) throw new IllegalArgumentException("Target unit cannot be null");
-        double baseValue=convertToBaseUnit();
+        //double baseValue=convertToBaseUnit();
+        double baseValue=this.value * this.unit.getConversionFactor();
         double convertedValue=baseValue/ targetUnit.getConversionFactor();
         return new Length(round(convertedValue),targetUnit);
     }
@@ -36,9 +42,16 @@ public class Length {
     }
     @Override
     public boolean equals(Object obj) {
+        /*if (this==obj) return true;
+        if(!(obj instanceof Length other)) return false;
+        return compare(other);*/
         if (this==obj) return true;
         if(!(obj instanceof Length other)) return false;
-        return compare(other);
+        double epsilon=0.0001;
+        double thisBaseValue=this.convertToBaseUnit();
+        double otherBaseValue=other.convertToBaseUnit();
+        return Math.abs(thisBaseValue-otherBaseValue)<epsilon;
+
     }
     @Override
     public int hashCode() {
