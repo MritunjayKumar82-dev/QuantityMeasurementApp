@@ -3,6 +3,7 @@ package com.apps.quantitymeasurement;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class QuantityMeasurementAppTest {
     @Test
@@ -221,8 +222,48 @@ public class QuantityMeasurementAppTest {
     public void testConvertInchesToBaseUnit(){
         assertEquals(12.0,LengthUnit.INCHES.convertToBaseUnit(12.0));
     }
-    //UC9 Test code is below
+     //UC9 Test code is below
+     @Test
+     public void kilogramEquals1000Grams(){
+         Weight oneKilogram=new Weight(1.0,WeightUnit.KILOGRAM);
+         Weight thousandGrams=new Weight(1000.0,WeightUnit.GRAM);
+         assertEquals(oneKilogram,thousandGrams);
+     }
+     @Test
+    public void poundEquals453Point592Grams(){
+        Weight onePound=new Weight(1.0,WeightUnit.POUND);
+        Weight grams=new Weight(453.592,WeightUnit.GRAM);
+        assertEquals(onePound,grams);
 
+     }
+     @Test
+     void tonneEquals1000000Grams(){
+        Weight oneTonne=new Weight(1.0,WeightUnit.KILOGRAM);
+        Weight grams=new Weight(1000,WeightUnit.GRAM);
+        assertEquals(oneTonne,grams);
+     }
+     @Test
+    void kilogramNotEqualToPound(){
+        Weight oneKilogram=new Weight(1.0,WeightUnit.KILOGRAM);
+        Weight onePound=new Weight(1.0,WeightUnit.POUND);
+        assertNotEquals(oneKilogram,onePound);
+
+     }
+     @Test
+     void additionOfWeightEqualsExpected(){
+         Weight weight1=new Weight(1.0,WeightUnit.KILOGRAM);
+         Weight weight2=new Weight(500,WeightUnit.GRAM);
+         Weight result=weight1.add(weight2,WeightUnit.GRAM);
+         assertEquals(new Weight(1500,WeightUnit.GRAM),result);
+
+     }
+    @Test
+    void testFeetInchesComparision(){
+        Length feet=new Length(1,LengthUnit.FEET);
+        Length inches=new Length(12,LengthUnit.INCHES);
+        assertEquals(feet,inches);
+
+    }
 
 
 }
