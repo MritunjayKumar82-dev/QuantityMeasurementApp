@@ -6,17 +6,21 @@ public enum LengthUnit {
     YARDS(36.0),
     CENTIMETERS(0.393701);
 
-    private final double toInchesFactor;
+    private final double conversionFactor;
 
-    LengthUnit(double toInchesFactor) {
-        this.toInchesFactor = toInchesFactor;
+    LengthUnit(double conversionFactor) {
+        this.conversionFactor = conversionFactor;
+    }
+
+    public double getConversionFactor() {
+        return conversionFactor;
     }
 
     public double convertToBaseUnit(double value){
-        return round(value*toInchesFactor);
+        return round(value*conversionFactor);
     }
     public double convertFromBaseUnit(double baseValue){
-        return round(baseValue/toInchesFactor);
+        return round(baseValue/conversionFactor);
 
     }
     private static double round(double value){
