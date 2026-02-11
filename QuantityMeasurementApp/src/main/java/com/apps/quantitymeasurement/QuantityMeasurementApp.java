@@ -168,8 +168,8 @@ public class QuantityMeasurementApp {
         //UC10
         /*Length Comparision*/
 
-        Quantity<LengthUnit> lengthFeet=new Quantity<>(10.0,LengthUnit.FEET);
-        Quantity<LengthUnit> lengthInches=new Quantity<>(120.0,LengthUnit.INCHES);
+        Quantity<LengthUnit> lengthFeet=new Quantity<>(1.0,LengthUnit.FEET);
+        Quantity<LengthUnit> lengthInches=new Quantity<>(12.0,LengthUnit.INCHES);
         boolean isLengthEqual=lengthFeet.equals(lengthInches);
         System.out.println("Are lengths equal ? " + isLengthEqual);
 
@@ -180,7 +180,7 @@ public class QuantityMeasurementApp {
         System.out.println("Are weights equal ? " + isWeightEqual);
 
         Quantity<LengthUnit> convertedLength=lengthFeet.convertTo(LengthUnit.INCHES);
-        System.out.println("10 feet in inches: " + convertedLength.getValue()+ " -- "+convertedLength.getUnit());
+        System.out.println("1 feet in inches: " + convertedLength.getValue()+ " -- "+convertedLength.getUnit());
 
         Quantity<WeightUnit> convertedWeight=weightGrams.convertTo(WeightUnit.KILOGRAM);
         System.out.println("1000 grams in kilograms: " + convertedWeight.getValue() + " -- "+convertedWeight.getUnit());
