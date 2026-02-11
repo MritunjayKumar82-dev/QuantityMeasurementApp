@@ -13,7 +13,7 @@ public class Quantity<U extends IMeasurable> {
     public double getValue() {
         return value;
     }
-    public Quantity<U> converTo(U targetUnit){
+    public Quantity<U> convertTo(U targetUnit){
         if (!unit.getClass().equals((targetUnit.getClass()))){
             throw  new IllegalArgumentException("Incompatible units");
         }

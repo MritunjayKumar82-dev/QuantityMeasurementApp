@@ -126,6 +126,9 @@ public class QuantityMeasurementApp {
         Weight weight=new Weight(value,fromUnit);
         return weight.convertTo(toUnit);
     }
+    public static Quantity<WeightUnit> demonstrateWeightConversion(Quantity<WeightUnit> weight,WeightUnit targetUnit){
+        return weight.convertTo(targetUnit);
+    }
     public static Weight demonstrateWeightConversion(Weight weight,WeightUnit toUnit){
         return weight.convertTo(toUnit);
     }
@@ -135,8 +138,12 @@ public class QuantityMeasurementApp {
     }
     public static Weight demonstrateWeightAddition(Weight w1,Weight w2,WeightUnit targetUnit){
         return w1.add(w2,targetUnit);
-
     }
+    public static Quantity<WeightUnit> demonstrateWeightAddition(Quantity<WeightUnit> w1,Quantity<WeightUnit> w2,WeightUnit targetUnit){
+        Quantity<WeightUnit> sum=w1.add(w2);
+        return sum.convertTo(targetUnit);
+    }
+
     public static void main(String[] args) {
         System.out.println(new Length(1.0,LengthUnit.FEET).convertTo(LengthUnit.INCHES));
         System.out.println(new Length(1.0,LengthUnit.FEET).add(new Length(12.0,LengthUnit.INCHES),LengthUnit.FEET));
@@ -158,7 +165,36 @@ public class QuantityMeasurementApp {
         System.out.println(demonstrateWeightConversion(new Weight(1.0,WeightUnit.KILOGRAM),WeightUnit.GRAM));
         System.out.println(demonstrateWeightAddition(new Weight(1.0,WeightUnit.KILOGRAM),new Weight(500.0,WeightUnit.GRAM),WeightUnit.KILOGRAM));
 
+        //UC10
+        /*Length Comparision*/
 
+        Quantity<LengthUnit> lengthFeet=new Quantity<>(10.0,LengthUnit.FEET);
+        Quantity<LengthUnit> lengthInches=new Quantity<>(120.0,LengthUnit.INCHES);
+        boolean isLengthEqual=lengthFeet.equals(lengthInches);
+        System.out.println("Are lengths equal ? " + isLengthEqual);
+
+        Quantity<WeightUnit> weightKilograms= new Quantity<>(1.0,WeightUnit.KILOGRAM);
+        Quantity<WeightUnit> weightGrams=new Quantity<>(1000.0,WeightUnit.GRAM);
+
+        boolean isWeightEqual=weightKilograms.equals(weightGrams);
+        System.out.println("Are weights equal ? " + isWeightEqual);
+
+        Quantity<LengthUnit> convertedLength=lengthFeet.convertTo(LengthUnit.INCHES);
+        System.out.println("10 feet in inches: " + convertedLength.getValue()+ " -- "+convertedLength.getUnit());
+
+        Quantity<WeightUnit> convertedWeight=weightGrams.convertTo(WeightUnit.KILOGRAM);
+        System.out.println("1000 grams in kilograms: " + convertedWeight.getValue() + " -- "+convertedWeight.getUnit());
+
+        Quantity<LengthUnit> totalLength=lengthFeet.add(lengthInches);
+        System.out.println("Total Length in Feet: " + totalLength.getValue());
+
+        Quantity<WeightUnit> weightPounds=new Quantity<>(2.0,WeightUnit.POUND);
+        System.out.println("1000 grams in kilograms: " + convertedWeight.getValue()+ " -- "+convertedWeight.getUnit());
+        Quantity<WeightUnit> totalWeight=weightKilograms.add(weightPounds);
+        System.out.println("Total weight in kilograms: "+totalWeight.getValue()+ " -- "+totalWeight.getUnit());
+
+        Quantity<WeightUnit> sumWeightInGrams=demonstrateWeightAddition(weightKilograms,weightPounds,WeightUnit.GRAM);
+        System.out.println("1000 grams in kilograms: " + convertedWeight.getValue()+ " -- "+convertedWeight.getUnit());
 
     }
 
