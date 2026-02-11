@@ -265,6 +265,35 @@ public class QuantityMeasurementAppTest {
         assertEquals(feet,inches);
 
     }
+// Below test case for UC10
+@Test
+void testIMeasurableInterface_LengthUnitImplementation(){
+    LengthUnit unit=LengthUnit.FEET;
+    assertTrue(unit instanceof IMeasurable);
+    assertEquals(12.0,unit.getConversionFactor());
+    assertEquals(12.0,unit.convertToBaseUnit(1.0));
+    assertEquals(1.0,unit.convertFromBaseUnit(12.0));
+}
+    @Test
+    void testIMeasurableInterface_WeightUnitImplementation(){
+        WeightUnit unit=WeightUnit.KILOGRAM;
+        assertTrue(unit instanceof IMeasurable);
+        assertEquals(1000.0,unit.getConversionFactor());
+        assertEquals(1000.0,unit.convertToBaseUnit(1.0));
+        assertEquals(1.0,unit.convertFromBaseUnit(1000.0));
+    }
+    @Test
+    void testIMeasurableInterface_ConsistentBehavior(){
+        LengthUnit unit=LengthUnit.FEET;
+        WeightUnit kg=WeightUnit.KILOGRAM;
+        assertNotNull(unit.getConversionFactor());
+        assertNotNull(kg.getConversionFactor());
+    }
+    /*@Test
+    void testGenericQuantity_LengthOperaions_Equality(){
+        //Quantity<LengthUnit> length1=new Q
+    }*/
+
 
 
 }
