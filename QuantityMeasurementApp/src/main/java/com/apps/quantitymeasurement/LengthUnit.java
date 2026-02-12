@@ -11,21 +11,34 @@ public enum LengthUnit implements IMeasurable{
     LengthUnit(double conversionFactor) {
         this.conversionFactor = conversionFactor;
     }
-
+    @Override
     public double getConversionFactor() {
         return conversionFactor;
     }
 
+    /*@Override
     public double convertToBaseUnit(double value){
         return round(value*conversionFactor);
     }
+
+    @Override
     public double convertFromBaseUnit(double baseValue){
         return round(baseValue/conversionFactor);
 
+    }*/
+    @Override
+    public double convertToBaseUnit(double value){
+        return value*conversionFactor;
     }
-    private static double round(double value){
-        return Math.round((value*100.0)/100.0);
+
+    @Override
+    public double convertFromBaseUnit(double baseValue){
+        return baseValue/conversionFactor;
+
     }
+  //  private static double round(double value){
+     /*   return Math.round((value*100.0)/100.0);
+    }*/
 
 
 }

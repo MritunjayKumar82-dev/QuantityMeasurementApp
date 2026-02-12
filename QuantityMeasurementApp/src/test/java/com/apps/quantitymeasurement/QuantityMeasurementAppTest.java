@@ -160,13 +160,13 @@ public class QuantityMeasurementAppTest {
     }
     @Test
     public void tsetReflexiveSymmetricAndTransitiveProperty(){
-       Length oneFoot=new Length(1.0,LengthUnit.FEET);
-       Length twelveInches=new Length(12.0,LengthUnit.INCHES);
-       Length oneThirdYard=new Length(0.333333,LengthUnit.YARDS);
-       assertEquals(oneFoot,oneFoot);
-       assertEquals(oneFoot,twelveInches);
-       assertEquals(twelveInches,oneFoot);
-       assertEquals(oneFoot,oneThirdYard);
+        Length oneFoot=new Length(1.0,LengthUnit.FEET);
+        Length twelveInches=new Length(12.0,LengthUnit.INCHES);
+        Length oneThirdYard=new Length(0.333333,LengthUnit.YARDS);
+        assertEquals(oneFoot,oneFoot);
+        assertEquals(oneFoot,twelveInches);
+        assertEquals(twelveInches,oneFoot);
+        assertEquals(oneFoot,oneThirdYard);
     }
     @Test
     public void differentValuesSameUnitNotEqual(){
@@ -222,41 +222,41 @@ public class QuantityMeasurementAppTest {
     public void testConvertInchesToBaseUnit(){
         assertEquals(12.0,LengthUnit.INCHES.convertToBaseUnit(12.0));
     }
-     //UC9 Test code is below
-     @Test
-     public void kilogramEquals1000Grams(){
-         Weight oneKilogram=new Weight(1.0,WeightUnit.KILOGRAM);
-         Weight thousandGrams=new Weight(1000.0,WeightUnit.GRAM);
-         assertEquals(oneKilogram,thousandGrams);
-     }
-     @Test
+    //UC9 Test code is below
+    @Test
+    public void kilogramEquals1000Grams(){
+        Weight oneKilogram=new Weight(1.0,WeightUnit.KILOGRAM);
+        Weight thousandGrams=new Weight(1000.0,WeightUnit.GRAM);
+        assertEquals(oneKilogram,thousandGrams);
+    }
+    @Test
     public void poundEquals453Point592Grams(){
         Weight onePound=new Weight(1.0,WeightUnit.POUND);
         Weight grams=new Weight(453.592,WeightUnit.GRAM);
         assertEquals(onePound,grams);
 
-     }
-     @Test
-     void tonneEquals1000000Grams(){
+    }
+    @Test
+    void tonneEquals1000000Grams(){
         Weight oneTonne=new Weight(1.0,WeightUnit.KILOGRAM);
         Weight grams=new Weight(1000,WeightUnit.GRAM);
         assertEquals(oneTonne,grams);
-     }
-     @Test
+    }
+    @Test
     void kilogramNotEqualToPound(){
         Weight oneKilogram=new Weight(1.0,WeightUnit.KILOGRAM);
         Weight onePound=new Weight(1.0,WeightUnit.POUND);
         assertNotEquals(oneKilogram,onePound);
 
-     }
-     @Test
-     void additionOfWeightEqualsExpected(){
-         Weight weight1=new Weight(1.0,WeightUnit.KILOGRAM);
-         Weight weight2=new Weight(500,WeightUnit.GRAM);
-         Weight result=weight1.add(weight2,WeightUnit.GRAM);
-         assertEquals(new Weight(1500,WeightUnit.GRAM),result);
+    }
+    @Test
+    void additionOfWeightEqualsExpected(){
+        Weight weight1=new Weight(1.0,WeightUnit.KILOGRAM);
+        Weight weight2=new Weight(500,WeightUnit.GRAM);
+        Weight result=weight1.add(weight2,WeightUnit.GRAM);
+        assertEquals(new Weight(1500,WeightUnit.GRAM),result);
 
-     }
+    }
 
     @Test
     void testFeetInchesComparision(){
@@ -265,15 +265,15 @@ public class QuantityMeasurementAppTest {
         assertEquals(feet,inches);
 
     }
-// Below test case for UC10
-@Test
-void testIMeasurableInterface_LengthUnitImplementation(){
-    LengthUnit unit=LengthUnit.FEET;
-    assertTrue(unit instanceof IMeasurable);
-    assertEquals(12.0,unit.getConversionFactor());
-    assertEquals(12.0,unit.convertToBaseUnit(1.0));
-    assertEquals(1.0,unit.convertFromBaseUnit(12.0));
-}
+    // Below test case for UC10
+    @Test
+    void testIMeasurableInterface_LengthUnitImplementation(){
+        LengthUnit unit=LengthUnit.FEET;
+        assertTrue(unit instanceof IMeasurable);
+        assertEquals(12.0,unit.getConversionFactor());
+        assertEquals(12.0,unit.convertToBaseUnit(1.0));
+        assertEquals(1.0,unit.convertFromBaseUnit(12.0));
+    }
     @Test
     void testIMeasurableInterface_WeightUnitImplementation(){
         WeightUnit unit=WeightUnit.KILOGRAM;
@@ -289,12 +289,78 @@ void testIMeasurableInterface_LengthUnitImplementation(){
         assertNotNull(unit.getConversionFactor());
         assertNotNull(kg.getConversionFactor());
     }
-    /*@Test
+    @Test
     void testGenericQuantity_LengthOperaions_Equality(){
-        //Quantity<LengthUnit> length1=new Q
-    }*/
-
-
+        Quantity<LengthUnit> length1=new Quantity<>(1.0,LengthUnit.FEET);
+        Quantity<LengthUnit> length2=new Quantity<>(12.0,LengthUnit.INCHES);
+        assertTrue(length1.equals(length2));
+    }
+    @Test
+    void testGenericQuantity_WeightOperaions_Equality(){
+        Quantity<WeightUnit> weight1=new Quantity<>(1.0,WeightUnit.KILOGRAM);
+        Quantity<WeightUnit> weight2=new Quantity<>(1000.0,WeightUnit.GRAM);
+        assertTrue(weight1.equals(weight2));
+    }
+    @Test
+    void testGenericQuantity_LengthOperations_Conversion(){
+        Quantity<LengthUnit> length=new Quantity<>(1.0,LengthUnit.FEET);
+        Quantity<LengthUnit> result=length.convertTo(LengthUnit.INCHES);
+        assertEquals(12.0,result.getValue());
+        assertEquals(LengthUnit.INCHES,result.getUnit());
+    }
+    @Test//7
+    void testGenericQuantity_WeightOperations_Conversion(){
+        Quantity<WeightUnit> weight=new Quantity<>(1.0,WeightUnit.KILOGRAM);
+        Quantity<WeightUnit> result=weight.convertTo(WeightUnit.GRAM);
+        assertEquals(1000.0,result.getValue());
+        assertEquals(WeightUnit.GRAM,result.getUnit());
+    }
+    @Test//8
+    void testGenericQuantity_LengthOperations_Addition() {
+        Quantity<LengthUnit> feet = new Quantity<>(1.0, LengthUnit.FEET);
+        Quantity<LengthUnit> inches = new Quantity<>(12.0,LengthUnit.INCHES);
+        Quantity<LengthUnit> result=feet.add(inches);
+        assertEquals(2.0, result.getValue());
+        assertEquals(LengthUnit.FEET,result.getUnit());
+    }
+    @Test//9
+    void testGenericQuantity_WeightOperations_Addition() {
+        Quantity<WeightUnit> kg = new Quantity<>(1.0, WeightUnit.KILOGRAM);
+        Quantity<WeightUnit> grams = new Quantity<>(1000.0,WeightUnit.GRAM);
+        Quantity<WeightUnit> result=kg.add(grams);
+        assertEquals(2.0, result.getValue());
+        assertEquals(WeightUnit.KILOGRAM,result.getUnit());
+    }
+    @Test//10
+    void testCrossCategoryPrevention_LengthVsWeight() {
+        Quantity<LengthUnit> length = new Quantity<>(1.0, LengthUnit.FEET);
+        Quantity<WeightUnit> weight = new Quantity<>(1.0,WeightUnit.KILOGRAM);
+        assertFalse(length.equals(weight));
+    }
+    @Test//11
+    void testCrossCategoryPrevention_CompilerTypeSafety() {
+        Quantity<LengthUnit> length = new Quantity<>(1.0, LengthUnit.FEET);
+        Quantity<WeightUnit> weight = new Quantity<>(1.0,WeightUnit.KILOGRAM);
+        assertTrue(true);
+    }
+    @Test//12
+    void testGenericQuantity_ConstructorValidation_NullUnit() {
+        assertThrows(IllegalArgumentException.class,()->{new Quantity<>(1.0,null);});
+    }
+    @Test//13
+    void testGenericQuantity_ConstructorValidation_InvalidValue() {
+        assertThrows(IllegalArgumentException.class,()->{new Quantity<>(Double.NaN,LengthUnit.FEET);});
+        assertThrows(IllegalArgumentException.class,()->{new Quantity<>(Double.POSITIVE_INFINITY,LengthUnit.FEET);});
+    }
+    @Test//14
+    void testGenericQuantity_Conversion_AllUnitCombinations() {
+        Quantity<LengthUnit> feet=new Quantity<>(1.0,LengthUnit.FEET);
+        assertEquals(12.0,feet.convertTo(LengthUnit.INCHES).getValue());
+        assertEquals(0.3333333,feet.convertTo(LengthUnit.YARDS).getValue(),0.0001);
+        Quantity<WeightUnit> kg=new Quantity<>(1.0,WeightUnit.KILOGRAM);
+        assertEquals(1000,kg.convertTo(WeightUnit.GRAM).getValue());
+        assertEquals(2.2046226218,kg.convertTo(WeightUnit.POUND).getValue(),0.01);
+    }
 
 }
 
