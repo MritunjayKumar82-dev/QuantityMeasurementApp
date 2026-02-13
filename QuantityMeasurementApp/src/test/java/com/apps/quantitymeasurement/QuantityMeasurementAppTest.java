@@ -485,7 +485,17 @@ public class QuantityMeasurementAppTest {
         assertEquals(2.0,weightResult.getValue(),0.0001);
 
     }
-
+    //20
+    @Test
+    void testTypeWildcard_FlexibleSignature() {
+        Quantity<LengthUnit> length=new Quantity<>(12.0,LengthUnit.FEET);
+        Quantity<WeightUnit> weight=new Quantity<>(1000.0,WeightUnit.GRAM);
+        assertEquals(12.0,getValue(length));
+        assertEquals(1000.0,getValue(weight));
+    }
+    private  double getValue(Quantity<?> quantity){
+        return quantity.getValue();
+    }
 }
 
 
