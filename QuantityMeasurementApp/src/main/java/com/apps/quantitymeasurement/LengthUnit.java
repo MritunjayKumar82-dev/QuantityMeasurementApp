@@ -36,8 +36,13 @@ public enum LengthUnit implements IMeasurable{
         return baseValue/conversionFactor;
 
     }
-  //  private static double round(double value){
-     /*   return Math.round((value*100.0)/100.0);
+
+    @Override
+    public String getUnitName() {
+        return name();
+    }
+     /* private static double round(double value){
+        return Math.round((value*100.0)/100.0);
     }*/
 
 

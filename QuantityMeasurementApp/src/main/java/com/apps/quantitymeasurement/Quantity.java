@@ -31,6 +31,15 @@ public class Quantity<U extends IMeasurable> {
         double convertedValue=targetUnit.convertFromBaseUnit(baseValue);
         return new Quantity<>(convertedValue,targetUnit);
     }
+    public <U extends IMeasurable> double convertToo(U targetUnit){
+        if (!unit.getClass().equals((targetUnit.getClass()))){
+            throw  new IllegalArgumentException("Incompatible units");
+        }
+        double ValueInBaseUnit=unit.convertToBaseUnit(value);
+        return targetUnit.convertFromBaseUnit(ValueInBaseUnit);
+
+    }
+
 
     public Quantity<U> add(Quantity<U> other){
         if (!unit.getClass().equals(other.unit.getClass())){
@@ -39,11 +48,33 @@ public class Quantity<U extends IMeasurable> {
         double baseValue1=unit.convertToBaseUnit(value);
         double baseValue2=other.unit.convertToBaseUnit(other.value);
         double sumBase=baseValue1+baseValue2;
-        double resultValue=unit.convertFromBaseUnit(sumBase);
-
-        return new Quantity<>(resultValue,unit);
+        double resultValue=this.unit.convertFromBaseUnit(sumBase);
+        if(!Double.isFinite(resultValue)){
+            throw new RuntimeException("Invalid numeric result");
+        }
+        return new Quantity<>(resultValue,this.unit);
 
     }
+    public Quantity<U> add(Quantity<U> other,U targetUnit){
+        return add(new Quantity<>(value,unit),other,targetUnit);
+
+    }
+
+    private Quantity<U> add(Quantity<U> quantity1, Quantity<U> quantity2, U targetUnit) {
+        if(!(quantity1.unit.getClass().equals(targetUnit.getClass()))||!(quantity2.unit.getClass().equals(targetUnit.getClass()))){
+            throw new IllegalArgumentException();
+        }
+        /*if(!Double.isFinite(quantity1.value)||!Double.isInfinite(quantity2.value)){
+            throw new RuntimeException("Is Infinite or NaN");
+        }*/
+        double valueInBaseUnit1=quantity1.unit.convertToBaseUnit(quantity1.value);
+        double valueInBaseUnit2=quantity2.unit.convertToBaseUnit(quantity2.value);
+        double sumInBaseUnit=valueInBaseUnit1+valueInBaseUnit2;
+        double targetValue=sumInBaseUnit/targetUnit.getConversionFactor();
+        targetValue=Math.round(targetValue*100)/100.0;
+        return new Quantity<>(targetValue,targetUnit);
+    }
+
     public boolean equals(Object obj){
         if (this==obj) return true;
         if(!(obj instanceof Quantity<?>)) return false;
@@ -53,6 +84,15 @@ public class Quantity<U extends IMeasurable> {
         if (!unit.getClass().equals(other.unit.getClass())) return false;
         double baseValue1=unit.convertToBaseUnit(value);
         double baseValue2=((IMeasurable)other.unit).convertToBaseUnit(other.value);
-        return Double.compare(baseValue1,baseValue2)==0;
+//        return Double.compare(baseValue1,baseValue2)==0;
+        return  Math.abs(baseValue1-baseValue2)<0.001;
+    }
+
+    @Override
+    public String toString() {
+        return "Quantity{" +
+                "value=" + value +
+                ", unit=" + unit +
+                '}';
     }
 }

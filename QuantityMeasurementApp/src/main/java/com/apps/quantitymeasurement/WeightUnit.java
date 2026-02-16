@@ -21,4 +21,9 @@ public enum WeightUnit implements IMeasurable {
     public double getConversionFactor() {
         return conversionFactor;
     }
+
+    @Override
+    public String getUnitName() {
+        return "";
+    }
 }
