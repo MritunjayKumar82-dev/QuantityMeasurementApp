@@ -73,6 +73,30 @@ public class QuantityMeasurementApp {
         return quantity1.add(quantity2, targetUnit);
     }
 
+    //For UC12
+
+    public static <U extends IMeasurable> Quantity<U> demonstrateSubtraction(
+            Quantity<U> quantity1,
+            Quantity<U> quantity2) {
+
+        return quantity1.subtract(quantity2);
+    }
+
+    public static <U extends IMeasurable> Quantity<U> demonstrateSubtraction(
+            Quantity<U> quantity1,
+            Quantity<U> quantity2,
+            U targetUnit) {
+
+        return quantity1.subtract(quantity2, targetUnit);
+    }
+
+    public static <U extends IMeasurable> double demonstrateDivision(
+            Quantity<U> quantity1,
+            Quantity<U> quantity2) {
+
+        return quantity1.divide(quantity2);
+    }
+
     public static void main(String[] args) {
         System.out.println(new Length(1.0,LengthUnit.FEET).convertTo(LengthUnit.INCHES));
         System.out.println(new Length(1.0,LengthUnit.FEET).add(new Length(12.0,LengthUnit.INCHES),LengthUnit.FEET));
@@ -156,6 +180,52 @@ public class QuantityMeasurementApp {
         System.out.println(new Quantity<>(1.0, VolumeUnit.LITRE).equals(new Quantity<>(1.0, LengthUnit.FEET)));
         System.out.println(new Quantity<>(1.0, VolumeUnit.LITRE).equals(new Quantity<>(1.0, WeightUnit.KILOGRAM)));
 
-    }
+        // For UC12
 
+        //UC12 Substraction with Implicit TargetUnit
+        System.out.println(demonstrateSubtraction(new Quantity<>(10.0, LengthUnit.FEET),new Quantity<>(6.0, LengthUnit.INCHES)));
+        System.out.println(demonstrateSubtraction(new Quantity<>(10.0, WeightUnit.KILOGRAM),new Quantity<>(5000.0, WeightUnit.GRAM)));
+        System.out.println(demonstrateSubtraction(new Quantity<>(5.0, VolumeUnit.LITRE),new Quantity<>(500.0, VolumeUnit.MILLILITRE)));
+
+        //UC12 Substraction with Explicit TargetUnit
+        System.out.println(demonstrateSubtraction(new Quantity<>(10.0, LengthUnit.FEET),new Quantity<>(6.0, LengthUnit.INCHES), LengthUnit.INCHES));
+        System.out.println(demonstrateSubtraction(new Quantity<>(10.0, WeightUnit.KILOGRAM),new Quantity<>(5000.0, WeightUnit.GRAM), WeightUnit.GRAM));
+        System.out.println(demonstrateSubtraction(new Quantity<>(5.0, VolumeUnit.LITRE),new Quantity<>(2.0, VolumeUnit.LITRE), VolumeUnit.MILLILITRE));
+
+        //UC12 Substraction Resulting in Negative Values
+        System.out.println(demonstrateSubtraction(new Quantity<>(5.0, LengthUnit.FEET),new Quantity<>(10.0, LengthUnit.FEET)));
+        System.out.println(demonstrateSubtraction(new Quantity<>(2.0, WeightUnit.KILOGRAM),new Quantity<>(5.0, WeightUnit.KILOGRAM)));
+
+//UC12 Substraction Resulting in Zero
+        System.out.println(demonstrateSubtraction(new Quantity<>(10.0, LengthUnit.FEET),new Quantity<>(120.0, LengthUnit.INCHES)));
+        System.out.println(demonstrateSubtraction(new Quantity<>(1.0, VolumeUnit.LITRE),new Quantity<>(1000.0, VolumeUnit.MILLILITRE)));
+//UC12 Division Operations
+        System.out.println(demonstrateDivision(new Quantity<>(10.0, LengthUnit.FEET),new Quantity<>(2.0, LengthUnit.FEET)));
+        System.out.println(demonstrateDivision(new Quantity<>(10.0, LengthUnit.FEET),new Quantity<>(5.0, LengthUnit.FEET)));
+        System.out.println(demonstrateDivision(new Quantity<>(24.0, LengthUnit.INCHES),new Quantity<>(2.0, LengthUnit.FEET)));
+        System.out.println(demonstrateDivision(new Quantity<>(10.0, WeightUnit.KILOGRAM),new Quantity<>(5.0, WeightUnit.KILOGRAM)));
+        System.out.println(demonstrateDivision(new Quantity<>(5.0, VolumeUnit.LITRE),new Quantity<>(10.0, VolumeUnit.LITRE)));
+//UC12 Division with Different Units (Same Category)
+        System.out.println(demonstrateDivision(new Quantity<>(12.0, LengthUnit.INCHES),new Quantity<>(1.0, LengthUnit.FEET)));
+        System.out.println(demonstrateDivision(new Quantity<>(2000.0, WeightUnit.GRAM),new Quantity<>(1.0, WeightUnit.KILOGRAM)));
+        System.out.println(demonstrateDivision(new Quantity<>(1000.0, VolumeUnit.MILLILITRE),new Quantity<>(1.0, VolumeUnit.LITRE)));
+//UC12 Error Cases
+        try{
+            new Quantity<>(10.0, LengthUnit.FEET).subtract(null);
+        }catch (Exception ex){
+           // ex.printStackTrace();
+        }
+
+        try{
+            new Quantity<>(10.0, LengthUnit.FEET).divide(new Quantity<>(0.0, LengthUnit.FEET));
+        }catch (Exception ex){
+           // ex.printStackTrace();
+        }
+
+        try{
+            demonstrateSubtraction(new Quantity<>(10.0, LengthUnit.FEET), new Quantity<>(5.0, WeightUnit.KILOGRAM));
+        }catch (Exception ex){
+           // ex.printStackTrace();
+        }
+    }
 }
