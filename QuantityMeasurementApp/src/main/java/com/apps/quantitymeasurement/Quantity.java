@@ -40,7 +40,6 @@ public class Quantity<U extends IMeasurable> {
 
     }
 
-
     public Quantity<U> add(Quantity<U> other){
         if (!unit.getClass().equals(other.unit.getClass())){
             throw  new IllegalArgumentException("Cannot add incompatible quantities");
@@ -64,9 +63,8 @@ public class Quantity<U extends IMeasurable> {
         if(!(quantity1.unit.getClass().equals(targetUnit.getClass()))||!(quantity2.unit.getClass().equals(targetUnit.getClass()))){
             throw new IllegalArgumentException();
         }
-        /*if(!Double.isFinite(quantity1.value)||!Double.isInfinite(quantity2.value)){
-            throw new RuntimeException("Is Infinite or NaN");
-        }*/
+
+        
         double valueInBaseUnit1=quantity1.unit.convertToBaseUnit(quantity1.value);
         double valueInBaseUnit2=quantity2.unit.convertToBaseUnit(quantity2.value);
         double sumInBaseUnit=valueInBaseUnit1+valueInBaseUnit2;
@@ -87,6 +85,7 @@ public class Quantity<U extends IMeasurable> {
 //        return Double.compare(baseValue1,baseValue2)==0;
         return  Math.abs(baseValue1-baseValue2)<0.001;
     }
+
     // For UC12
     public Quantity<U> subtract(Quantity<U> other){
         return subtract(new Quantity<>(value,unit),other,unit);
