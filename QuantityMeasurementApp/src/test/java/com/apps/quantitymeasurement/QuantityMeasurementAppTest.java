@@ -2,6 +2,9 @@ package com.apps.quantitymeasurement;
 
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+
 import static com.apps.quantitymeasurement.QuantityMeasurementApp.demonstrateDivision;
 import static com.apps.quantitymeasurement.QuantityMeasurementApp.demonstrateSubtraction;
 import static org.junit.jupiter.api.Assertions.*;
@@ -1036,7 +1039,328 @@ public class QuantityMeasurementAppTest {
         Quantity<LengthUnit> result = demonstrateSubtraction(value1,value2);
         assertEquals(new Quantity<>(20.20, LengthUnit.FEET), result);
     }
+    @Test
+    public void testDivision_PrecisionAndRounding() {
 
+        double epsilon = 1e-2;
+
+        Quantity<LengthUnit> value1 =
+                new Quantity<>(40.256, LengthUnit.FEET);
+
+        Quantity<LengthUnit> value2 =
+                new Quantity<>(20.20, LengthUnit.FEET);
+
+        double result = demonstrateDivision(value1, value2);
+
+        assertEquals(1.99, result, epsilon);
+    }
+    //Foe UC13
+    @Test
+    public void testRefactoring_Add_DelegatesViaHelper() {
+
+        Quantity<LengthUnit> value1 =
+                new Quantity<>(40.0, LengthUnit.FEET);
+
+        Quantity<LengthUnit> value2 =
+                new Quantity<>(20.0, LengthUnit.FEET);
+
+        Quantity<LengthUnit> expected =
+                new Quantity<>(60.0, LengthUnit.FEET);
+
+        Quantity<LengthUnit> actual =
+                demonstrateAddition(value1, value2);
+
+        assertEquals(expected, actual);
+    }
+
+
+    @Test
+    public void testRefactoring_Subtract_DelegatesViaHelper() {
+
+        Quantity<LengthUnit> value1 =
+                new Quantity<>(40.0, LengthUnit.FEET);
+
+        Quantity<LengthUnit> value2 =
+                new Quantity<>(20.0, LengthUnit.FEET);
+
+        Quantity<LengthUnit> expected =
+                new Quantity<>(20.0, LengthUnit.FEET);
+
+        Quantity<LengthUnit> actual =
+                demonstrateSubtraction(value1, value2);
+
+        assertEquals(expected, actual);
+    }
+    @Test
+    public void testRefactoring_Divide_DelegatesViaHelper() {
+
+        Quantity<LengthUnit> value1 =
+                new Quantity<>(40.0, LengthUnit.FEET);
+
+        Quantity<LengthUnit> value2 =
+                new Quantity<>(20.0, LengthUnit.FEET);
+
+        double expected = 2.0;
+
+        double actual =
+                demonstrateDivision(value1, value2);
+
+        assertEquals(expected, actual, 0.0001);
+    }
+
+
+    @Test
+    public void testValidation_NullOperand_ConsistentAcrossOperations() {
+
+        Quantity<LengthUnit> value1 =
+                new Quantity<>(40.0, LengthUnit.FEET);
+
+        assertThrows(NullPointerException.class, () -> {
+            demonstrateAddition(value1, null);
+        });
+
+        assertThrows(NullPointerException.class, () -> {
+            demonstrateSubtraction(value1, null);
+        });
+
+        assertThrows(NullPointerException.class, () -> {
+            demonstrateDivision(value1, null);
+        });
+    }
+    @Test
+    public void testArithmeticOperation_Add_EnumComputation() {
+        assertEquals(15.0,
+                ArithmeticOperation.ADD.compute(10, 5),
+                0.0001);
+    }
+
+    @Test
+    public void testArithmeticOperation_Subtract_EnumComputation() {
+        assertEquals(5.0,
+                ArithmeticOperation.SUBTRACT.compute(10, 5),
+                0.0001);
+    }
+
+    @Test
+    public void testArithmeticOperation_Divide_EnumComputation() {
+        assertEquals(2.0,
+                ArithmeticOperation.DIVIDE.compute(10, 5),
+                0.0001);
+    }
+
+    @Test
+    public void testArithmeticOperation_DivideByZero_EnumThrows() {
+        assertThrows(ArithmeticException.class, () -> {
+            ArithmeticOperation.DIVIDE.compute(10, 0);
+        });
+    }
+    @Test
+    public void testImplicitTargetUnit_AddSubtract() {
+
+        Quantity<WeightUnit> weightInKilogram =
+                new Quantity<>(5, WeightUnit.KILOGRAM);
+
+        Quantity<WeightUnit> weightInGrams =
+                new Quantity<>(1000, WeightUnit.GRAM);
+
+        Quantity<WeightUnit> totalWeight =
+                demonstrateAddition(weightInKilogram, weightInGrams);
+
+        assertEquals(new Quantity<>(6, WeightUnit.KILOGRAM),
+                totalWeight);
+
+        Quantity<WeightUnit> totalSubWeight =
+                demonstrateSubtraction(weightInKilogram, weightInGrams);
+
+        assertEquals(new Quantity<>(4, WeightUnit.KILOGRAM),
+                totalSubWeight);
+    }
+
+
+    @Test
+    public void testImplicitTargetUnit_AddSubtract_Overrides() {
+
+        Quantity<WeightUnit> weightInKilogram =
+                new Quantity<>(5, WeightUnit.KILOGRAM);
+
+        Quantity<WeightUnit> weightInGrams =
+                new Quantity<>(1000, WeightUnit.GRAM);
+
+        Quantity<WeightUnit> totalWeight =
+                demonstrateAddition(weightInKilogram,
+                        weightInGrams,
+                        WeightUnit.GRAM);
+
+        assertEquals(new Quantity<>(6000, WeightUnit.GRAM),
+                totalWeight);
+
+        Quantity<WeightUnit> totalSubWeight =
+                demonstrateSubtraction(weightInKilogram,
+                        weightInGrams,
+                        WeightUnit.GRAM);
+
+        assertEquals(new Quantity<>(4000, WeightUnit.GRAM),
+                totalSubWeight);
+    }
+    @Test
+    public void testImmutability_AfterAdd_ViaCentralizedHelper() {
+
+        Quantity<WeightUnit> weightInKilogram =
+                new Quantity<>(5, WeightUnit.KILOGRAM);
+
+        Quantity<WeightUnit> weightInGrams =
+                new Quantity<>(1000, WeightUnit.GRAM);
+
+        Quantity<WeightUnit> totalWeight =
+                demonstrateAddition(weightInKilogram, weightInGrams);
+
+        // Verify original object remains unchanged (immutability)
+        assertEquals(new Quantity<>(5, WeightUnit.KILOGRAM),
+                weightInKilogram);
+    }
+
+
+    @Test
+    public void testImmutability_AfterSubtract_ViaCentralizedHelper() {
+
+        Quantity<WeightUnit> weightInKilogram =
+                new Quantity<>(5, WeightUnit.KILOGRAM);
+
+        Quantity<WeightUnit> weightInGrams =
+                new Quantity<>(1000, WeightUnit.GRAM);
+
+        Quantity<WeightUnit> totalWeight =
+                demonstrateSubtraction(weightInKilogram, weightInGrams);
+
+        // Verify original object remains unchanged
+        assertEquals(new Quantity<>(5, WeightUnit.KILOGRAM),
+                weightInKilogram);
+    }
+
+
+    @Test
+    public void testImmutability_AfterDivide_ViaCentralizedHelper() {
+
+        Quantity<WeightUnit> weightInKilogram =
+                new Quantity<>(5, WeightUnit.KILOGRAM);
+
+        Quantity<WeightUnit> weightInGrams =
+                new Quantity<>(1000, WeightUnit.GRAM);
+
+        double result =
+                demonstrateDivision(weightInKilogram, weightInGrams);
+
+        // Verify original object remains unchanged
+        assertEquals(new Quantity<>(5, WeightUnit.KILOGRAM),
+                weightInKilogram);
+    }
+    @Test
+    public void testValidation_Helper_PrivateVisibility()
+            throws NoSuchMethodException {
+
+        // Get the private method using reflection
+        Method method = Quantity.class.getDeclaredMethod(
+                "validateArithmeticOperands",
+                Quantity.class,
+                IMeasurable.class,
+                boolean.class
+        );
+
+        // Verify the method is private
+        assertTrue(
+                Modifier.isPrivate(method.getModifiers()),
+                "validateArithmeticOperands should be private"
+        );
+    }
+    @Test
+    public void testArithmetic_Chain_Operations() {
+
+        Quantity<WeightUnit> q1 =
+                new Quantity<>(50, WeightUnit.KILOGRAM);
+
+        Quantity<WeightUnit> q2 =
+                new Quantity<>(10, WeightUnit.KILOGRAM);
+
+        Quantity<WeightUnit> q3 =
+                new Quantity<>(5, WeightUnit.KILOGRAM);
+
+        Quantity<WeightUnit> q4 =
+                new Quantity<>(2, WeightUnit.KILOGRAM);
+
+        double result =
+                q1.add(q2)
+                        .subtract(q3)
+                        .divide(q4);
+
+        assertNotNull(result);
+    }
+    @Test
+    public void testEnumConstant_ADD_CorrectlyAdds() {
+
+        assertEquals(10.0,
+                ArithmeticOperation.ADD.compute(7, 3),
+                0.0001);
+    }
+
+
+    @Test
+    public void testEnumConstant_SUBTRACT_CorrectlySubtracts() {
+
+        assertEquals(4.0,
+                ArithmeticOperation.SUBTRACT.compute(7, 3),
+                0.0001);
+    }
+
+
+    @Test
+    public void testEnumConstant_DIVIDE_CorrectlyDivides() {
+
+        assertEquals(3.5,
+                ArithmeticOperation.DIVIDE.compute(7, 2),
+                0.0001);
+    }
+    /*@Test
+    public void testHelper_BaseUnitConversion_Correct() {
+
+        double val = WeightUnit.GRAM.convertToBaseUnit(5000);
+
+        assertEquals(5.0, val, 0.0001);
+    }
+
+
+    @Test
+    public void testHelper_ResultConversion_Correct() {
+
+        double val = WeightUnit.GRAM.convertFromBaseUnit(5);
+
+        assertEquals(5000.0, val, 0.0001);
+    }
+
+
+    @Test
+    public void testRefactoring_Validation_UnifiedBehaviour() {
+
+        Quantity<LengthUnit> lengthInYards =
+                new Quantity<>(Double.NaN, LengthUnit.YARDS);
+
+        Quantity<LengthUnit> lengthInFeet =
+                new Quantity<>(10, LengthUnit.FEET);
+
+        assertThrows(RuntimeException.class, () -> {
+            lengthInYards.add(lengthInFeet);
+        });
+
+        assertThrows(RuntimeException.class, () -> {
+            lengthInYards.subtract(lengthInFeet);
+        });
+
+        assertThrows(RuntimeException.class, () -> {
+            lengthInYards.divide(lengthInFeet);
+        });
+    }
+*/
+
+    
 }
 
 

@@ -119,7 +119,7 @@ public class QuantityMeasurementApp {
         System.out.println(demonstrateWeightAddition(new Weight(1.0,WeightUnit.KILOGRAM),new Weight(500.0,WeightUnit.GRAM),WeightUnit.KILOGRAM));
 
         //UC10
-        /*Length Comparision*/
+        /**Length Comparision**/
 
         Quantity<LengthUnit> lengthFeet=new Quantity<>(1.0,LengthUnit.FEET);
         Quantity<LengthUnit> lengthInches=new Quantity<>(12.0,LengthUnit.INCHES);
