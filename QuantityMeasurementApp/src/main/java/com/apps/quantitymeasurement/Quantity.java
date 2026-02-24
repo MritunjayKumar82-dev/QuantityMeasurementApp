@@ -97,7 +97,7 @@ public class Quantity<U extends IMeasurable> {
     }
     private double performArithmetic(Quantity<U> other, U targetUnit, ArithmeticOperation operation) {
 
-        // Convert both values to base unit
+        /*// Convert both values to base unit
         double valueInBaseUnit1 = unit.convertToBaseUnit(value);
         double valueInBaseUnit2 = other.unit.convertToBaseUnit(other.value);
 
@@ -117,6 +117,18 @@ public class Quantity<U extends IMeasurable> {
         // Round to 2 decimal places
         result = Math.round(result * 100) / 100.0;
 
+        return result;*/
+
+        double valueInBaseUnit1=unit.convertToBaseUnit(value);
+        double valueInBaseUnit2=other.unit.convertToBaseUnit(other.value);
+        double result = 0;
+        unit.validateOperationSupport(operation.name());
+        result = operation.compute(valueInBaseUnit1,valueInBaseUnit2);
+        if(operation.name().equals("DIVIDE")){
+            return result;
+        }
+        result= result/targetUnit.getConversionFactor();
+        result = Math.round(result*100)/100.0;
         return result;
     }
 

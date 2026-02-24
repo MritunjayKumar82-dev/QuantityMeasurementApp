@@ -7,4 +7,13 @@ public interface IMeasurable {
     default double convertFromBaseUnit(double baseValue){return  baseValue/getConversionFactor();}
 
     String getUnitName();
+
+    //For UC14
+    SupportsArithmetic supportsArithmetic = ()->true;
+    default boolean supportsArithmetic(){
+        return supportsArithmetic.isSupported();
+    }
+    default void validateOperationSupport(String operation){
+
+    }
 }

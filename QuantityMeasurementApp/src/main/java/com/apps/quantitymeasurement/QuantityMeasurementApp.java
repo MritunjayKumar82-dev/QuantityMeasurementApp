@@ -213,19 +213,59 @@ public class QuantityMeasurementApp {
         try{
             new Quantity<>(10.0, LengthUnit.FEET).subtract(null);
         }catch (Exception ex){
-           // ex.printStackTrace();
+            // ex.printStackTrace();
         }
 
         try{
             new Quantity<>(10.0, LengthUnit.FEET).divide(new Quantity<>(0.0, LengthUnit.FEET));
         }catch (Exception ex){
-           // ex.printStackTrace();
+            // ex.printStackTrace();
         }
 
         try{
             demonstrateSubtraction(new Quantity<>(10.0, LengthUnit.FEET), new Quantity<>(5.0, WeightUnit.KILOGRAM));
         }catch (Exception ex){
-           // ex.printStackTrace();
+            // ex.printStackTrace();
         }
+
+        //UC14
+        System.out.println("n=== Temperature Demonstration ===");
+
+        //Equality Demonstration
+        Quantity<TemperatureUnit> temp1 = new Quantity<>(0.0, TemperatureUnit.CELSIUS);
+        Quantity<TemperatureUnit> temp2 = new Quantity<>(32.0, TemperatureUnit.FAHRENHEIT);
+        System.out.println("0 degree C equals 32 F "+ temp1.equals(temp2));
+
+        System.out.println(new Quantity<>(212.0, TemperatureUnit.FAHRENHEIT).equals(new Quantity<>(100.0, TemperatureUnit.CELSIUS)));
+        System.out.println(new Quantity<>(50.0, TemperatureUnit.CELSIUS).equals(new Quantity<>(122.0, TemperatureUnit.FAHRENHEIT)));
+
+        //Conversion Demonstration
+        Quantity<TemperatureUnit> celsius = new Quantity<>(100.0, TemperatureUnit.CELSIUS);
+        double fahrenheit = celsius.convertToo(TemperatureUnit.FAHRENHEIT);
+        System.out.println(fahrenheit);
+
+        System.out.println(new Quantity<>(32.0, TemperatureUnit.FAHRENHEIT).convertTo(TemperatureUnit.CELSIUS));
+        System.out.println(new Quantity<>(-40.0, TemperatureUnit.CELSIUS).convertTo(TemperatureUnit.FAHRENHEIT));
+
+        //Unsupported Operation Demonstration
+        try{
+            celsius.add(new Quantity<>(50.0, TemperatureUnit.CELSIUS));
+        }catch (UnsupportedOperationException e){
+            System.out.println("Cant add absolute Temperatures: "+ e.getMessage());
+        }
+
+        try{
+            celsius.subtract(new Quantity<>(50.0, TemperatureUnit.CELSIUS));
+        }catch (UnsupportedOperationException e){
+            System.out.println("Cant add absolute Temperatures: "+ e.getMessage());
+        }
+
+        try{
+            celsius.divide(new Quantity<>(50.0, TemperatureUnit.CELSIUS));
+        }catch (UnsupportedOperationException e){
+            System.out.println("Cant add absolute Temperatures: "+ e.getMessage());
+        }
+
+        System.out.println(celsius.equals(new Quantity<>(50.0, VolumeUnit.LITRE)));
     }
 }
