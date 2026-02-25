@@ -607,6 +607,7 @@ public class QuantityMeasurementAppTest {
         Quantity<VolumeUnit> VolumeInMillilitres = new Quantity<>(1, VolumeUnit.MILLILITRE);
         assertTrue(VolumeInLitre.equals(VolumeInMillilitres));
     }
+
     @Test
     void testConversion_LitreToMillilitre(){
         Quantity<VolumeUnit> VolumeInLitre = new Quantity<>(1.0, VolumeUnit.LITRE);
@@ -619,6 +620,7 @@ public class QuantityMeasurementAppTest {
         Quantity<VolumeUnit> VolumeInMillilitres = new Quantity<>(1000, VolumeUnit.MILLILITRE);
         assertEquals(new Quantity<>(1, VolumeUnit.LITRE),demonstrateConversion(VolumeInMillilitres, VolumeUnit.LITRE));
     }
+
     @Test
     void testConversion_GallonToLitre(){
         Quantity<VolumeUnit> VolumeInGallon = new Quantity<>(1.0, VolumeUnit.GALLON);
@@ -635,6 +637,7 @@ public class QuantityMeasurementAppTest {
         Quantity<VolumeUnit> VolumeInLitre = new Quantity<>(5, VolumeUnit.LITRE);
         assertEquals(new Quantity<>(5, VolumeUnit.LITRE),demonstrateConversion(VolumeInLitre, VolumeUnit.LITRE));
     }
+
     @Test
     void testConversion_ZeroValue(){
         Quantity<VolumeUnit> VolumeInLitre = new Quantity<>(0, VolumeUnit.LITRE);
@@ -645,6 +648,7 @@ public class QuantityMeasurementAppTest {
         Quantity<VolumeUnit> VolumeInLitre = new Quantity<>(-1.0, VolumeUnit.LITRE);
         assertEquals(new Quantity<>(-1000.0, VolumeUnit.MILLILITRE),demonstrateConversion(VolumeInLitre, VolumeUnit.MILLILITRE));
     }
+
     @Test
     void testConversion_RoundTrip(){
         Quantity<VolumeUnit> VolumeInLitre = new Quantity<>(1.5, VolumeUnit.LITRE);
