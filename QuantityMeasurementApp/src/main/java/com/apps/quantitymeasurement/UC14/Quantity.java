@@ -1,6 +1,4 @@
-package com.apps.quantitymeasurement;
-
-import com.sun.jdi.Value;
+package com.apps.quantitymeasurement.UC14;
 
 public class Quantity<U extends IMeasurable> {
     private double value;
@@ -70,7 +68,7 @@ public class Quantity<U extends IMeasurable> {
         double targetValue=sumInBaseUnit/targetUnit.getConversionFactor();
         targetValue=Math.round(targetValue*100)/100.0;*/
         quantity1.validateArithmeticOperands(quantity2,targetUnit,true);
-        double targetValue=quantity1.performArithmetic(quantity2,targetUnit,ArithmeticOperation.SUBTRACT);
+        double targetValue=quantity1.performArithmetic(quantity2,targetUnit, ArithmeticOperation.SUBTRACT);
         return new Quantity<>(targetValue,targetUnit);
     }
     private void validateArithmeticOperands(Quantity<U> other, U targetUnit, boolean targetUnitRequired) {

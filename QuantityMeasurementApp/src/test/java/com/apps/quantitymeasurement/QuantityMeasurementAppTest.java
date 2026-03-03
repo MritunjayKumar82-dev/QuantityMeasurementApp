@@ -1,12 +1,13 @@
 package com.apps.quantitymeasurement;
 
+import com.apps.quantitymeasurement.UC14.*;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
-import static com.apps.quantitymeasurement.QuantityMeasurementApp.demonstrateDivision;
-import static com.apps.quantitymeasurement.QuantityMeasurementApp.demonstrateSubtraction;
+import static com.apps.quantitymeasurement.UC14.QuantityMeasurementApp.demonstrateDivision;
+import static com.apps.quantitymeasurement.UC14.QuantityMeasurementApp.demonstrateSubtraction;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
